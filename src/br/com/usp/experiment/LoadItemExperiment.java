@@ -1,9 +1,13 @@
-package br.com.usp.database;
+package br.com.usp.experiment;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Calendar;
 
+/**
+ * @author Lucas Biccio Ribeiro
+ * @version 1.0 Class responsible for generate a test mass of items
+ * @since 05/04/2012
+ */
 public class LoadItemExperiment {
 
 	/**
@@ -23,7 +27,7 @@ public class LoadItemExperiment {
 	public void insertItem(String name, double price, double distance, int validity, int serviceProviderRating, boolean isOnSale)
 	{
 		try{
-			String sql = "insert into item (name, price, distance, validity, serviceproviderrating, isonsale) values (?, ?, ?, ?, ?)";
+			String sql = "insert into item (name, price, distance, validity, serviceproviderrating, isonsale) values (?, ?, ?, ?, ?, ?)";
 			ConnectionFactory factory = new ConnectionFactory();
 			PreparedStatement stmt = factory.getConnection().prepareStatement(sql);
 			stmt.setString(1, name);
@@ -46,7 +50,7 @@ public class LoadItemExperiment {
 	/**
 	 * Method responsible to generate the random values for the item attribute and insert it on a database.
 	 * In addiction, this function has the control of the range values, where we can inform the minimum and the maximum
-	 * value for the iusuariotem attributes, and then, the method will respect this interval when generating the random values .
+	 * value for the attributes, and then, the method will respect this interval when generating the random values .
 	 * 
 	 * @param numberOfItems - number of items that the method will generate
 	 * @param minPrice - minimum price
@@ -61,23 +65,14 @@ public class LoadItemExperiment {
 	public void loadItemTable (int numberOfItems, double minPrice, double maxPrice, double minDistance, double maxDistance,
 											int minValidity, int maxValidity, int minServiceProviderRating, int maxServiceProviderRating)
 	{
-	    String name = "item ";
-		double price = 0.0;
+	    double price = 0.0;
 		double distance = 0.0;
 		int validity = 0;
 		int serviceProviderRating = 0 ;
 		double isOnSaleValue = 0;
 		boolean isOnSale = false;
 		
-		System.out.println("***********************************************");
-		System.out.println("NUMBER OF ITEMS: "+ numberOfItems);
-		System.out.println("PRICE: " + minPrice+ " to "+maxPrice);
-		System.out.println("DISTANCE: "+ minDistance+ " to "+maxDistance);
-		System.out.println("VALIDITY: "+minValidity+" to "+maxValidity);
-		System.out.println("IS ON SALE: true or false");
-		System.out.println("***********************************************");
-		
-		for(int i = 0; i < numberOfItems; i++)
+		for(int i = 1; i < numberOfItems + 1; i++)
 		{
 			//requiring the random values for the variables to move to the attributes
 			price = minPrice + (((maxPrice - minPrice) + 1) * Math.random());
@@ -93,32 +88,10 @@ public class LoadItemExperiment {
 				isOnSale = true;
 			else
 				isOnSale = false;
-						
-			/*
-			//evidence of test - items conjunct printed on console
-			//use this print to validate the random attributes values
-			DecimalFormat df = new DecimalFormat("0.00");
-			System.out.println(i+"\t Price: "+ df.format(price) + "\t Distance: " + df.format(distance) + "\t Validity: " + validity + 
-					   "\t ServiceProviderRating: "+ serviceProviderRating + "\t isOnSaleValue: " + df.format(isOnSaleValue) +
-					   "\t isOnSale: " + isOnSale);
-			*/
-		
+			String nameItem = "item" + i;
+			
 			//inserting the register of an item on the database
-			name = name + i;
-			insertItem(name, price, distance, validity, serviceProviderRating, isOnSale);
+			insertItem(nameItem, price, distance, validity, serviceProviderRating, isOnSale);
 		}		   
-	}
-	
-	/**
-	 * Main method that will load the database with a specific number of items and their random values 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		long start = Calendar.getInstance().getTimeInMillis();
-		LoadItemExperiment load = new LoadItemExperiment();
-		load.loadItemTable(1000, 50.0, 200.0, 1.0, 300.0, 30, 360, 1, 5);
-		long stop = Calendar.getInstance().getTimeInMillis();;
-		System.out.println(">>>>>>>>>>> EXECUTION TIME: "+ (stop - start) + " MILISECONDS <<<<<<<<<<<");
-	}
-	
+	}	
 }

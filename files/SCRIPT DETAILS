@@ -1,0 +1,105 @@
+################### CREATE TABLE ITEM SCRIPT ###################
+
+Author: LUCAS BICCIO RIBEIRO
+Date: 04/04/2012
+
+Objective: Store the items of a e-commerce system.
+
+****************************************************************
+create table item
+( id serial not null,
+  name varchar(20) not null,
+  price decimal (10,2) not null,
+  distance decimal(10,2) not null,
+  validity integer not null,
+  serviceProviderRating integer not null,
+  isOnSale boolean not null,
+  constraint id_item_pk primary key (id));
+****************************************************************
+
+Attributes Definition:
+
+id - the key or identity of a item in the system
+name - the item큦 name
+price - the price of a item calculated in R$
+distance - the distance between the client and the service provider location - calculated in KM
+validity - the period that service is valid, counted in number of calendar days
+serviceProviderRating - the score of a service provider - a category attribute
+						1 - terrible
+						2 - bad
+						3 - normal
+						4 - good
+						5 - excellent
+ isOnSale - the flag of a service that indicates it큦 on sale or not
+ 
+################################################################
+ 
+
+############## CREATE TABLE  CONSUMER SCRIPT ###################
+
+Author: LUCAS BICCIO RIBEIRO
+
+Date: 04/04/2012
+version: 1.0
+Objective: Store the consumers of a e-commerce system
+
+Date: 05/04/2012
+version: 2.0
+Objective: include the parameters variable and the probability on the consumer base
+
+**************************************************************** 
+create table consumer
+( 
+	id SERIAL NOT NULL,
+	name VARCHAR(20) NOT NULL,
+	paramA DECIMAL(1,5) NOT NULL,
+	paramB DECIMAL(1,5) NOT NULL,
+	paramC DECIMAL(1,5) NOT NULL,
+	paramD DECIMAL(1,5) NOT NULL,
+	paramE DECIMAL(1,5) NOT NULL,
+	probability DECIMAL(1,5) NOT NULL,
+	CONSTRAINT id_user_pk PRIMARY KEY (id)
+);
+****************************************************************
+
+Attributes Definition:  
+
+id - the key or identity of a consumer int the system.
+name - consumer큦 name
+paramA - reference to item's price
+paramB - reference to item's distance
+paramC - reference to item's validity
+paramD - reference to item's service provider
+paramE - reference to item is available to sale or not
+probability - the probability of been the wanted consumer by searching the consumer preferred items
+     
+################################################################
+ 
+############## CREATE TABLE  CONSUMER_PURCHASED_ITEM SCRIPT ###################
+ 
+Author: LUCAS BICCIO RIBEIRO
+
+Date: 07/04/2012
+version: 1.0
+Objective: Store the consumer큦 shopping 
+
+**************************************************************** 
+create table consumer_purchased_item
+(
+	id serial not null,
+	id_consumer integer not null,
+	id_item integer not null,
+	purchased_date timestamp not null,
+	constraint id_consumer_purchased_item_pk
+	PRIMARY KEY (id,id_consumer,id_item,purchased_date)
+);
+**************************************************************** 
+
+Attributes Definitions:
+id - shopping큦 id
+id_consumer - consumer큦 id
+id_item item큦 id
+purchased_date - the timestamp (date, time, timezone) of the shopping
+
+################################################################
+ 

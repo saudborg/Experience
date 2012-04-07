@@ -1,4 +1,4 @@
-package br.com.usp.database;
+package br.com.usp.experiment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,7 +1,7 @@
-package br.com.usp.entity;
+package br.com.usp.enumerator;
 
 
-public enum ItemEnum {
+public enum ServiceProviderRating {
     
     TERRIBLE(1, "terrible"),
 
@@ -17,7 +17,7 @@ public enum ItemEnum {
 
     private String name;
 
-    private ItemEnum(Integer value, String table) {
+    private ServiceProviderRating(Integer value, String table) {
         this.value = value;
     }
 
